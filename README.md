@@ -1,5 +1,5 @@
 # balanced-line-split
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbdougherty%2Fbalanced-line-split.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbdougherty%2Fbalanced-line-split?ref=badge_shield)
+[![Build Status](https://travis-ci.org/bdougherty/balanced-line-split.svg?branch=master)](https://travis-ci.org/bdougherty/balanced-line-split) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbdougherty%2Fbalanced-line-split.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbdougherty%2Fbalanced-line-split?ref=badge_shield)
 
 
 > Split a string into multiple lines of similar lengths.
