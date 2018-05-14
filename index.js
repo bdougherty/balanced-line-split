@@ -30,7 +30,8 @@ const findBreakOpportunity = (str, desiredWidth, direction, index) => {
 		if (direction < 0 && (index <= desiredWidth || index <= 0)) {
 			return index;
 		}
-		else if (direction > 0 && (index >= desiredWidth || index >= str.length)) {
+
+		if (direction > 0 && (index >= desiredWidth || index >= str.length)) {
 			return index;
 		}
 
