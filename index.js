@@ -43,12 +43,12 @@ const findBreakOpportunity = (str, desiredWidth, direction, index) => {
 	}
 };
 
-const exec = (str, lines) => {
+const exec = (str, lines, maxLineLength) => {
 	if (lines === 1) {
 		return stripAnsi(str);
 	}
 
-	const idealLineWidth = Math.ceil(stringWidth(str) / lines);
+	let idealLineWidth = Math.ceil(stringWidth(str) / lines);
 
 	let remainingLines = lines;
 	let remainingText = stripAnsi(str);
@@ -58,6 +58,12 @@ const exec = (str, lines) => {
 	// line and pad the rest.
 	if (![...remainingText].some((char) => isBreakCharacter(char))) {
 		return `${remainingText}${'\n'.repeat(lines - 1)}`;
+	}
+
+	if (idealLineWidth > maxLineLength) {
+		const additionalLines = Math.ceil(idealLineWidth / maxLineLength);
+		remainingLines += additionalLines;
+		idealLineWidth = maxLineLength;
 	}
 
 	while (remainingLines > 1) {
@@ -78,10 +84,10 @@ const exec = (str, lines) => {
 	return finalText.join('\n');
 };
 
-module.exports = (str, lines = 2) => {
+module.exports = (str, lines = 2, maxLineLength = Infinity) => {
 	return String(str)
 		.normalize()
 		.split('\n')
-		.map((line) => exec(line, lines))
+		.map((line) => exec(line, lines, maxLineLength))
 		.join('\n');
 };

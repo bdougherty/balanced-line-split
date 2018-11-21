@@ -32,3 +32,9 @@ test('breaks words on allowed characters', (t) => {
 	t.is(balancedLineSplit('en\u2013dash', 2), 'en\u2013\ndash');
 	t.is(balancedLineSplit('soft\u00ADhyphen', 2), 'soft\u00AD\nhyphen');
 });
+
+test('with maximum line length', (t) => {
+	const longString = 'this is a really long string that needs to wrap to more than three lines this is a really long string that needs to wrap to more than three lines this is a really long string that needs to wrap to more than three lines this is a really long string that needs to wrap to more than three lines';
+	const longStringWithBreaks = 'this is a really long string that needs to wrap to more than\nthree lines this is a really long string that needs to wrap\nto more than three lines this is a really long string that\nneeds to wrap to more than three lines this is a really long\nstring that needs to wrap to more than three lines';
+	t.is(balancedLineSplit(longString, 3, 60), longStringWithBreaks);
+});

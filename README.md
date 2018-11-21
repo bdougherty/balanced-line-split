@@ -25,7 +25,7 @@ const result = balancedLineSplit(str, 3);
 
 ## API
 
-### balancedLineSplit(str, lines)
+### balancedLineSplit(str, lines = 1, maxLineLength = Infinity)
 
 #### str
 
@@ -35,9 +35,15 @@ The string to split.
 
 #### lines
 
-Type: `number`
+Type: `Number`
 
 The number of lines to split the string across. Note that the resulting string will include enough line breaks to match this number of lines, even if there is no text to fill them.
+
+#### maxLineLength
+
+Type: `Number`
+
+Attempt to stay within a specified maximum line length.
 
 ## Related
 
