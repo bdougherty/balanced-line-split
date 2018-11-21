@@ -1,16 +1,17 @@
 const stringWidth = require('string-width');
 const stripAnsi = require('strip-ansi');
 
-const isBreakCharacter = (str, index) => {
-	const regex = /(\s|-|\u2014|\u2013|\u00ad)/g;
-	const breakMatches = [];
-	let match;
-
-	while ((match = regex.exec(str))) {
-		breakMatches.push(match.index);
-	}
-
-	return breakMatches.includes(index);
+/*
+ * Break characters are:
+ * - whitespace (except non-breaking space: u00a0)
+ * - hyphen
+ * - em dash (u2014)
+ * - en dash (u2013)
+ * - soft hyphen (u00ad)
+ */
+const isBreakCharacter = (char) => {
+	const regex = /([^\S\u00a0]|-|\u2014|\u2013|\u00ad)/;
+	return regex.test(char);
 };
 
 const isBreakOpportunity = (str, index) => {
@@ -18,7 +19,10 @@ const isBreakOpportunity = (str, index) => {
 		return true;
 	}
 
-	return isBreakCharacter(str, index - 1) && !isBreakCharacter(str, index);
+	const previousChar = str.substring(index - 1, index);
+	const nextChar = str.substring(index, index + 1);
+
+	return isBreakCharacter(previousChar) && !isBreakCharacter(nextChar);
 };
 
 const findBreakOpportunity = (str, desiredWidth, direction, index) => {
