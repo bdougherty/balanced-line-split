@@ -50,6 +50,12 @@ const exec = (str, lines) => {
 	let remainingText = stripAnsi(str);
 	const finalText = [];
 
+	// If there are no break opportunities, return the full string as the first
+	// line and pad the rest.
+	if (![...remainingText].some((char) => isBreakCharacter(char))) {
+		return `${remainingText}${'\n'.repeat(lines - 1)}`;
+	}
+
 	while (remainingLines > 1) {
 		const guessedIndex = Math.round((remainingText.length + 1) / remainingLines) - 1;
 		const initialIndex = findBreakOpportunity(remainingText, idealLineWidth, -1, guessedIndex);
