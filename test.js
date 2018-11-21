@@ -22,6 +22,14 @@ test('string with no break opportunities is before line breaks', (t) => {
 	t.is(balancedLineSplit('Nobreakopportunity', 3), 'Nobreakopportunity\n\n');
 });
 
+test.failing('multi-byte characters', (t) => {
+	t.is(balancedLineSplit('🙌 👌 👍', 3), '🙌\n👌\n👍');
+	t.is(balancedLineSplit('🙌🙌 👌 👍', 3), '🙌🙌\n👌\n👍');
+	t.is(balancedLineSplit('🙌🙌 👌👌 👍', 3), '🙌🙌\n👌👌\n👍');
+	// need to denormalize
+	t.is(balancedLineSplit('Iñtërnâtiônàlizætiøn Internationalization', 2), 'Iñtërnâtiônàlizætiøn\nInternationalization');
+});
+
 test('breaks on whitespace except non-breaking space', (t) => {
 	t.is(balancedLineSplit('regular space', 2), 'regular\nspace');
 	t.is(balancedLineSplit('nonbreaking\u00A0space', 2), 'nonbreaking\u00A0space\n');
