@@ -44,6 +44,10 @@ const findBreakOpportunity = (str, desiredWidth, direction, index) => {
 };
 
 const exec = (str, lines) => {
+	if (lines === 1) {
+		return stripAnsi(str);
+	}
+
 	const idealLineWidth = Math.ceil(stringWidth(str) / lines);
 
 	let remainingLines = lines;
@@ -74,7 +78,7 @@ const exec = (str, lines) => {
 	return finalText.join('\n');
 };
 
-module.exports = (str, lines) => {
+module.exports = (str, lines = 2) => {
 	return String(str)
 		.normalize()
 		.split('\n')
