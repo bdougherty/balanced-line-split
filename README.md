@@ -1,5 +1,4 @@
 # balanced-line-split
-[![Build Status](https://travis-ci.org/bdougherty/balanced-line-split.svg?branch=master)](https://travis-ci.org/bdougherty/balanced-line-split)
 
 > Split a string into multiple lines of similar lengths.
 
@@ -12,10 +11,10 @@ $ npm install balanced-line-split
 ## Usage
 
 ```js
-const balancedLineSplit = require('balanced-line-split');
+import balancedLineSplit from 'balanced-line-split';
 
-const str = 'split me evenly';
-const result = balancedLineSplit(str, 3);
+const string = 'split me evenly';
+const result = balancedLineSplit(string, 3);
 
 // split
 // me
@@ -26,7 +25,7 @@ const result = balancedLineSplit(str, 3);
 
 ### balancedLineSplit(str, lines = 1, maxLineLength = Infinity)
 
-#### str
+#### string
 
 Type: `string`
 
