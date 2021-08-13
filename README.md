@@ -23,7 +23,7 @@ const result = balancedLineSplit(string, 3);
 
 ## API
 
-### balancedLineSplit(str, lines = 1, maxLineLength = Infinity)
+### balancedLineSplit(string, lines = 1, maxLineLength = Infinity)
 
 #### string
 
