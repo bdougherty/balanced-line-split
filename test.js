@@ -1,5 +1,5 @@
 import test from 'ava';
-import balancedLineSplit from '.';
+import balancedLineSplit from './index.js';
 
 test('splits string into balanced lines', (t) => {
 	t.is(balancedLineSplit('Friday deploy, good luck!', 3), 'Friday\ndeploy,\ngood luck!');
@@ -26,7 +26,7 @@ test.failing('multi-byte characters', (t) => {
 	t.is(balancedLineSplit('🙌 👌 👍', 3), '🙌\n👌\n👍');
 	t.is(balancedLineSplit('🙌🙌 👌 👍', 3), '🙌🙌\n👌\n👍');
 	t.is(balancedLineSplit('🙌🙌 👌👌 👍', 3), '🙌🙌\n👌👌\n👍');
-	// need to denormalize
+	// Need to denormalize
 	t.is(balancedLineSplit('Iñtërnâtiônàlizætiøn Internationalization', 2), 'Iñtërnâtiônàlizætiøn\nInternationalization');
 });
 

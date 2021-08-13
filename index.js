@@ -1,5 +1,5 @@
-const stringWidth = require('string-width');
-const stripAnsi = require('strip-ansi');
+import stringWidth from 'string-width';
+import stripAnsi from 'strip-ansi';
 
 /*
  * Break characters are:
@@ -10,24 +10,24 @@ const stripAnsi = require('strip-ansi');
  * - soft hyphen (u00ad)
  */
 const isBreakCharacter = (char) => {
-	const regex = /([^\S\u00a0]|-|\u2014|\u2013|\u00ad)/;
+	const regex = /([^\S\u00A0]|-|\u2014|\u2013|\u00AD)/;
 	return regex.test(char);
 };
 
-const isBreakOpportunity = (str, index) => {
-	if (index === 0 || index === str.length) {
+const isBreakOpportunity = (string, index) => {
+	if (index === 0 || index === string.length) {
 		return true;
 	}
 
-	const previousChar = str.substring(index - 1, index);
-	const nextChar = str.substring(index, index + 1);
+	const previousChar = string.slice(index - 1, index);
+	const nextChar = string.slice(index, index + 1);
 
 	return isBreakCharacter(previousChar) && !isBreakCharacter(nextChar);
 };
 
-const findBreakOpportunity = (str, desiredWidth, direction, index) => {
+const findBreakOpportunity = (string, desiredWidth, direction, index) => {
 	for (;;) {
-		while (!isBreakOpportunity(str, index)) {
+		while (!isBreakOpportunity(string, index)) {
 			index += direction;
 		}
 
@@ -35,7 +35,7 @@ const findBreakOpportunity = (str, desiredWidth, direction, index) => {
 			return index;
 		}
 
-		if (direction > 0 && (index >= desiredWidth || index >= str.length)) {
+		if (direction > 0 && (index >= desiredWidth || index >= string.length)) {
 			return index;
 		}
 
@@ -43,15 +43,15 @@ const findBreakOpportunity = (str, desiredWidth, direction, index) => {
 	}
 };
 
-const exec = (str, lines, maxLineLength) => {
+const exec = (string, lines, maxLineLength) => {
 	if (lines === 1) {
-		return stripAnsi(str);
+		return stripAnsi(string);
 	}
 
-	let idealLineWidth = Math.ceil(stringWidth(str) / lines);
+	let idealLineWidth = Math.ceil(stringWidth(string) / lines);
 
 	let remainingLines = lines;
-	let remainingText = stripAnsi(str);
+	let remainingText = stripAnsi(string);
 	const finalText = [];
 
 	// If there are no break opportunities, return the full string as the first
@@ -74,8 +74,8 @@ const exec = (str, lines, maxLineLength) => {
 
 		const splitIndex = Math.abs(idealLineWidth - beforeIndex) < Math.abs(idealLineWidth - afterIndex) ? beforeIndex : afterIndex;
 
-		finalText.push(remainingText.substr(0, splitIndex).trim());
-		remainingText = remainingText.substr(splitIndex).trim();
+		finalText.push(remainingText.slice(0, Math.max(0, splitIndex)).trim());
+		remainingText = remainingText.slice(splitIndex).trim();
 		remainingLines--;
 	}
 
@@ -84,10 +84,10 @@ const exec = (str, lines, maxLineLength) => {
 	return finalText.join('\n');
 };
 
-module.exports = (str, lines = 2, maxLineLength = Infinity) => {
-	return String(str)
-		.normalize()
-		.split('\n')
-		.map((line) => exec(line, lines, maxLineLength))
-		.join('\n');
-};
+const balancedLineSplit = (string, lines = 2, maxLineLength = Number.POSITIVE_INFINITY) => String(string)
+	.normalize()
+	.split('\n')
+	.map((line) => exec(line, lines, maxLineLength))
+	.join('\n');
+
+export default balancedLineSplit;
