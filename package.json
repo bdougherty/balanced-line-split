@@ -29,11 +29,21 @@
   },
   "devDependencies": {
     "ava": "^3.15.0",
-    "eslint-config-bdougherty": "^5.1.1",
     "nyc": "^15.1.0",
     "xo": "^0.44.0"
   },
   "xo": {
-    "extends": "bdougherty"
+    "rules": {
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
+      "capitalized-comments": "off",
+      "comma-dangle": "off",
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ]
+    }
   }
 }
